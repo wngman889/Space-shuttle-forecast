@@ -12,3 +12,4 @@ E:\Visual Studio 2022\Space-shuttle-forecast\Space-shuttle-forecast\obj\Debug\ne
 E:\Visual Studio 2022\Space-shuttle-forecast\Space-shuttle-forecast\obj\Debug\net8.0\Space-shuttle-forecast.pdb
 E:\Visual Studio 2022\Space-shuttle-forecast\Space-shuttle-forecast\obj\Debug\net8.0\Space-shuttle-forecast.genruntimeconfig.cache
 E:\Visual Studio 2022\Space-shuttle-forecast\Space-shuttle-forecast\obj\Debug\net8.0\ref\Space-shuttle-forecast.dll
+E:\Visual Studio 2022\Space-shuttle-forecast\Space-shuttle-forecast\obj\Debug\net8.0\Space-shuttle-forecast.sourcelink.json
