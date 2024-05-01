@@ -1,5 +1,4 @@
 ﻿using CsvHelper;
-using System.Formats.Asn1;
 using System.Globalization;
 
 namespace Space_shuttle_forecast
@@ -22,7 +21,7 @@ namespace Space_shuttle_forecast
                 {
                     using (var reader = new StreamReader(filePath))
 
-                    using (var csvReader = new CsvReader(reader, System.Globalization.CultureInfo.InvariantCulture))
+                    using (var csvReader = new CsvReader(reader, CultureInfo.InvariantCulture))
                     {
                         //using ToList(), the entire file will be read into memory 
                         var records = csvReader.GetRecords<CsvObject>().ToList();
