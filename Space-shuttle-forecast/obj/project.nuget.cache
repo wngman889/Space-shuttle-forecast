@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "nRQ4/GGWaCR0/jDWNwGE6BY2DoO9/Iqx+y8ZJ4Ar4A4YDB8JLGFnS/24WhUKdmAV45cCg1vN5SshTCA3JXxxHQ==",
+  "dgSpecHash": "5Pq7cXtLdgCB1qWHsoo5F0FNwLfAiB4i+vWvQBS2mwjrayhqJS1+qCRHFoXqFpU4R55SY8hW555VZBqetBhKnQ==",
   "success": true,
   "projectFilePath": "E:\\Visual Studio 2022\\Space-shuttle-forecast\\Space-shuttle-forecast\\Space-shuttle-forecast.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\acer\\.nuget\\packages\\csvhelper\\32.0.1\\csvhelper.32.0.1.nupkg.sha512"
+  ],
   "logs": []
 }

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Space-shuttle-forecast")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+76b9d7fea4f2b149f24d8ee8bd972e2a40fdda4b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2bdab9766bb0098329db90f104e851cd85c24ec3")]
 [assembly: System.Reflection.AssemblyProductAttribute("Space-shuttle-forecast")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Space-shuttle-forecast")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
