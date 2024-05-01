@@ -24,7 +24,7 @@ namespace Space_shuttle_forecast
 
                     using (var csvReader = new CsvReader(reader, System.Globalization.CultureInfo.InvariantCulture))
                     {
-                        //usuing ToList(), the entire file will be read into memory 
+                        //using ToList(), the entire file will be read into memory 
                         var records = csvReader.GetRecords<MyDataClass>().ToList();
                         parsedData.AddRange(records);
                     }
