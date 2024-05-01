@@ -14,7 +14,7 @@ namespace Space_shuttle_forecast
         public static async Task ReadCsvFilesFromFileSystem(string[] filePaths)
         {
             // Create a list to store the parsed data
-            List<MyDataClass> parsedData = new List<MyDataClass>();
+            List<CsvObject> parsedData = new List<CsvObject>();
 
             try
             {
@@ -25,7 +25,7 @@ namespace Space_shuttle_forecast
                     using (var csvReader = new CsvReader(reader, System.Globalization.CultureInfo.InvariantCulture))
                     {
                         //using ToList(), the entire file will be read into memory 
-                        var records = csvReader.GetRecords<MyDataClass>().ToList();
+                        var records = csvReader.GetRecords<CsvObject>().ToList();
                         parsedData.AddRange(records);
                     }
                 }
