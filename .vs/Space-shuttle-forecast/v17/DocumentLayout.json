@@ -1,0 +1,37 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "E:\\Visual Studio 2022\\Space-shuttle-forecast\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{81087D41-B2FE-47AF-95EE-2384157B35C7}|Space-shuttle-forecast\\Space-shuttle-forecast.csproj|e:\\visual studio 2022\\space-shuttle-forecast\\space-shuttle-forecast\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{81087D41-B2FE-47AF-95EE-2384157B35C7}|Space-shuttle-forecast\\Space-shuttle-forecast.csproj|solutionrelative:space-shuttle-forecast\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "E:\\Visual Studio 2022\\Space-shuttle-forecast\\Space-shuttle-forecast\\Program.cs",
+              "RelativeDocumentMoniker": "Space-shuttle-forecast\\Program.cs",
+              "ToolTip": "E:\\Visual Studio 2022\\Space-shuttle-forecast\\Space-shuttle-forecast\\Program.cs",
+              "RelativeToolTip": "Space-shuttle-forecast\\Program.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAAAvAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-01T13:45:47.233Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

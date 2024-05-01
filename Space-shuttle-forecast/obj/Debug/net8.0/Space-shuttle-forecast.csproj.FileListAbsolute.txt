@@ -1,0 +1,14 @@
+E:\Visual Studio 2022\Space-shuttle-forecast\Space-shuttle-forecast\bin\Debug\net8.0\Space-shuttle-forecast.exe
+E:\Visual Studio 2022\Space-shuttle-forecast\Space-shuttle-forecast\bin\Debug\net8.0\Space-shuttle-forecast.deps.json
+E:\Visual Studio 2022\Space-shuttle-forecast\Space-shuttle-forecast\bin\Debug\net8.0\Space-shuttle-forecast.runtimeconfig.json
+E:\Visual Studio 2022\Space-shuttle-forecast\Space-shuttle-forecast\bin\Debug\net8.0\Space-shuttle-forecast.dll
+E:\Visual Studio 2022\Space-shuttle-forecast\Space-shuttle-forecast\bin\Debug\net8.0\Space-shuttle-forecast.pdb
+E:\Visual Studio 2022\Space-shuttle-forecast\Space-shuttle-forecast\obj\Debug\net8.0\Space-shuttle-forecast.GeneratedMSBuildEditorConfig.editorconfig
+E:\Visual Studio 2022\Space-shuttle-forecast\Space-shuttle-forecast\obj\Debug\net8.0\Space-shuttle-forecast.AssemblyInfoInputs.cache
+E:\Visual Studio 2022\Space-shuttle-forecast\Space-shuttle-forecast\obj\Debug\net8.0\Space-shuttle-forecast.AssemblyInfo.cs
+E:\Visual Studio 2022\Space-shuttle-forecast\Space-shuttle-forecast\obj\Debug\net8.0\Space-shuttle-forecast.csproj.CoreCompileInputs.cache
+E:\Visual Studio 2022\Space-shuttle-forecast\Space-shuttle-forecast\obj\Debug\net8.0\Space-shuttle-forecast.dll
+E:\Visual Studio 2022\Space-shuttle-forecast\Space-shuttle-forecast\obj\Debug\net8.0\refint\Space-shuttle-forecast.dll
+E:\Visual Studio 2022\Space-shuttle-forecast\Space-shuttle-forecast\obj\Debug\net8.0\Space-shuttle-forecast.pdb
+E:\Visual Studio 2022\Space-shuttle-forecast\Space-shuttle-forecast\obj\Debug\net8.0\Space-shuttle-forecast.genruntimeconfig.cache
+E:\Visual Studio 2022\Space-shuttle-forecast\Space-shuttle-forecast\obj\Debug\net8.0\ref\Space-shuttle-forecast.dll
