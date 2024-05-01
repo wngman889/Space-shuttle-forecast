@@ -11,7 +11,7 @@ namespace Space_shuttle_forecast
             Console.WriteLine("Hello, World!");
         }
 
-        public static async Task ReadCsvFilesFromFileSystem(string[] filePaths)
+        public static List<CsvObject> ReadCsvFilesFromFileSystem(string[] filePaths)
         {
             // Create a list to store the parsed data
             List<CsvObject> parsedData = new List<CsvObject>();
@@ -35,8 +35,8 @@ namespace Space_shuttle_forecast
                 Console.WriteLine($"Error reading CSV file: {ex.Message}");
             }
 
+            return parsedData;
             // Now parsedData contains the combined CSV data from all files
-            // You can analyze or further process this data as needed
         }
     }
 }
