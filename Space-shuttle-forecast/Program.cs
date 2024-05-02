@@ -8,7 +8,9 @@ namespace Space_shuttle_forecast
         static void Main(string[] args)
         {
             int choice;
-            do
+            string? location = "", filePath = "";
+
+            while (true)
             {
                 Console.WriteLine("Choose a launch location:");
                 Console.WriteLine("1. Kourou, French Guyana");
@@ -19,47 +21,40 @@ namespace Space_shuttle_forecast
                 Console.WriteLine("0. Leave");
 
                 Console.Write("Enter your choice (0-5): ");
-            } while (!int.TryParse(Console.ReadLine(), out choice) || choice < 0 || choice > 5);
+                choice = Convert.ToInt32(Console.ReadLine());
 
-            string location = "";
+                switch (choice)
+                {
+                    case 1:
+                        location = "Kourou, French Guyana";
+                        break;
+                    case 2:
+                        location = "Tanegashima, Japan";
+                        break;
+                    case 3:
+                        location = "Cape Canaveral, USA";
+                        break;
+                    case 4:
+                        location = "Mahia, New Zealand";
+                        break;
+                    case 5:
+                        location = "Kodiak, USA";
+                        break;
+                    case 0:
+                        break;
+                    default:
+                        location = "";
+                        break;
+                }
 
-            switch (choice)
-            {
-                case 1:
-                    location = "Kourou, French Guyana";
+                if (choice == 0)
+                {
+                    Console.WriteLine("Goodbye!");
                     break;
-                case 2:
-                    location = "Tanegashima, Japan";
-                    break;
-                case 3:
-                    location = "Cape Canaveral, USA";
-                    break;
-                case 4:
-                    location = "Mahia, New Zealand";
-                    break;
-                case 5:
-                    location = "Kodiak, USA";
-                    break;
-                case 0:
-                    break;
-                default:
-                    location = "";
-                    break;
-            }
+                }
 
-            if (choice == 0)
-            {
-                Console.WriteLine("Goodbye!");
-                Environment.Exit(0); // Terminates the console application
-            }
+                Console.WriteLine($"You chose {location}");
 
-            Console.WriteLine($"You chose {location}");
-
-            string? filePath = "";
-
-            bool isValidFile = false;
-            while (!isValidFile)
-            {
                 try
                 {
                     Console.Write("Enter file path: ");
@@ -74,8 +69,6 @@ namespace Space_shuttle_forecast
                     {
                         throw new FileNotFoundException("File does not exist.");
                     }
-
-                    isValidFile = true;
                 }
                 catch (ArgumentNullException e)
                 {
@@ -89,10 +82,11 @@ namespace Space_shuttle_forecast
                 {
                     Console.WriteLine($"Error: {e.Message}");
                 }
+
+                Console.WriteLine($"Launch location: {location}");
+                Console.WriteLine($"File path: {filePath}");
             }
 
-            Console.WriteLine($"Launch location: {location}");
-            Console.WriteLine($"File path: {filePath}");
         }
 
         public static List<CsvObject> ReadCsvFilesFromFileSystem(string[] filePaths)
