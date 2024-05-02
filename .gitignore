@@ -375,3 +375,12 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+AssemblyInfo.cs
+.AssemblyInfoInputs.cache
+deps.json
+documentlayout.json
+corecompileinputs.cache
+filelistabsolute.txt
+*.pdb
+sourcelink.json
