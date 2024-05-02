@@ -69,6 +69,8 @@ namespace Space_shuttle_forecast
                     {
                         throw new FileNotFoundException("File does not exist.");
                     }
+
+                    ReadCsvFilesFromFileSystem(filePath);
                 }
                 catch (ArgumentNullException e)
                 {
@@ -89,15 +91,13 @@ namespace Space_shuttle_forecast
 
         }
 
-        public static List<CsvObject> ReadCsvFilesFromFileSystem(string[] filePaths)
+        public static List<CsvObject> ReadCsvFilesFromFileSystem(string filePath)
         {
             // Create a list to store the parsed data
             List<CsvObject> parsedData = new List<CsvObject>();
 
             try
             {
-                foreach (var filePath in filePaths)
-                {
                     using (var reader = new StreamReader(filePath))
 
                     using (var csvReader = new CsvReader(reader, CultureInfo.InvariantCulture))
@@ -106,7 +106,6 @@ namespace Space_shuttle_forecast
                         var records = csvReader.GetRecords<CsvObject>().ToList();
                         parsedData.AddRange(records);
                     }
-                }
             }
             catch (Exception ex)
             {
