@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 
 namespace Space_shuttle_forecast
 {
-    internal class CsvObject
+    public class CsvObject
     {
-        public DateTime Date { get; set; }
-
-        public TimeSpan Time { get; set; }
+        public int Day { get; set; }
 
         public int Temperature { get; set; }
 
@@ -20,7 +18,7 @@ namespace Space_shuttle_forecast
 
         public int Precipitation { get; set; }
 
-        public bool Lightning { get; set; }
+        public string? Lightning { get; set; }
 
         public string? Clouds { get; set; }
 

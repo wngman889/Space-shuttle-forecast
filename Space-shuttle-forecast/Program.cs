@@ -8,7 +8,7 @@ namespace Space_shuttle_forecast
         static void Main(string[] args)
         {
             int choice;
-            string? location = "", filePath = "";
+            string? location = "", folderPath = "";
 
             while (true)
             {
@@ -20,8 +20,19 @@ namespace Space_shuttle_forecast
                 Console.WriteLine("5. Kodiak, USA");
                 Console.WriteLine("0. Leave");
 
-                Console.Write("Enter your choice (0-5): ");
+                Console.Write("Enter location for launch (0-5): ");
                 choice = Convert.ToInt32(Console.ReadLine());
+
+                if (choice == 0)
+                {
+                    Console.WriteLine("Goodbye!");
+                    break;
+                }
+                else if (choice < 1 || choice > 5)
+                {
+                    Console.WriteLine("\nWrite number from the menu.\n");
+                    continue;
+                }
 
                 switch (choice)
                 {
@@ -47,30 +58,24 @@ namespace Space_shuttle_forecast
                         break;
                 }
 
-                if (choice == 0)
-                {
-                    Console.WriteLine("Goodbye!");
-                    break;
-                }
-
                 Console.WriteLine($"You chose {location}");
 
                 try
                 {
-                    Console.Write("Enter file path: ");
-                    filePath = Console.ReadLine();
+                    Console.Write("Enter folder path: ");
+                    folderPath = Console.ReadLine();
 
-                    if (string.IsNullOrWhiteSpace(filePath))
+                    if (string.IsNullOrWhiteSpace(folderPath))
                     {
-                        throw new ArgumentNullException("File path cannot be empty.");
+                        throw new ArgumentNullException("Folder path cannot be empty.");
                     }
 
-                    if (!File.Exists(filePath))
+                    if (!Directory.Exists(folderPath))
                     {
-                        throw new FileNotFoundException("File does not exist.");
+                        throw new FileNotFoundException("Folder does not exist.");
                     }
-
-                    ReadCsvFilesFromFileSystem(filePath);
+                    //Reading the csv file
+                    ReadCsvFilesFromFileSystem(folderPath);
                 }
                 catch (ArgumentNullException e)
                 {
@@ -86,26 +91,32 @@ namespace Space_shuttle_forecast
                 }
 
                 Console.WriteLine($"Launch location: {location}");
-                Console.WriteLine($"File path: {filePath}");
+                Console.WriteLine($"File path: {folderPath}");
             }
 
         }
 
-        public static List<CsvObject> ReadCsvFilesFromFileSystem(string filePath)
+        public static List<CsvObject> ReadCsvFilesFromFileSystem(string folderPath)
         {
+            string[] csvFiles = Directory.GetFiles(folderPath, "*.csv");
+
             // Create a list to store the parsed data
             List<CsvObject> parsedData = new List<CsvObject>();
 
             try
             {
-                    using (var reader = new StreamReader(filePath))
+                foreach (var csvFile in csvFiles)
+                {
+                    using (var reader = new StreamReader(csvFile))
 
                     using (var csvReader = new CsvReader(reader, CultureInfo.InvariantCulture))
                     {
                         //using ToList(), the entire file will be read into memory 
-                        var records = csvReader.GetRecords<CsvObject>().ToList();
+                        var records = csvReader.GetRecords<CsvObject>();
                         parsedData.AddRange(records);
                     }
+                }
+                
             }
             catch (Exception ex)
             {
