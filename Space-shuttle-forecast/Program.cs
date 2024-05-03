@@ -1,6 +1,5 @@
 ﻿using CsvHelper;
 using System.Globalization;
-
 namespace Space_shuttle_forecast
 {
     internal class Program
@@ -96,12 +95,13 @@ namespace Space_shuttle_forecast
 
         }
 
-        public static List<CsvObject> ReadCsvFilesFromFileSystem(string folderPath)
+        public static void ReadCsvFilesFromFileSystem(string folderPath)
         {
             string[] csvFiles = Directory.GetFiles(folderPath, "*.csv");
+            var locations = new List<string>();
 
             // Create a list to store the parsed data
-            List<CsvObject> parsedData = new List<CsvObject>();
+            List<List<CsvObject>> parsedData = new List<List<CsvObject>>();
 
             try
             {
@@ -111,20 +111,104 @@ namespace Space_shuttle_forecast
 
                     using (var csvReader = new CsvReader(reader, CultureInfo.InvariantCulture))
                     {
+                        //Skip the location
+                        csvReader.Read();
+
+                        //Read the first field of the first record
+                        if (csvReader.TryGetField(0, out string field) && field.StartsWith("Location:"))
+                        {
+                            // Extract the location information
+                            locations.Add(field.Replace("Location:", "").Trim());
+                        }
+                        else
+                            Console.WriteLine("\nProblem while extracting the location\n");
+
                         //using ToList(), the entire file will be read into memory 
-                        var records = csvReader.GetRecords<CsvObject>();
-                        parsedData.AddRange(records);
+                        var records = csvReader.GetRecords<CsvObject>().ToList();
+                        parsedData.Add(records);
                     }
                 }
-                
+
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error reading CSV file: {ex.Message}");
             }
 
-            return parsedData;
-            // Now parsedData contains the combined CSV data from all files
+            AnalysisOfCsvFilesArray(locations, parsedData);
+        }
+
+        public static void AnalysisOfCsvFilesArray(List<string> locations, List<List<CsvObject>> parsedData)
+        {
+            Dictionary<CsvObject, string> filteredCriteria = new Dictionary<CsvObject, string>();
+            var bestDayForLaunch = new CsvObject();
+            var keyValuePairForBestDay = new KeyValuePair<CsvObject, string>();
+
+            try
+            {
+                for (int i = 0; i < parsedData.Count; i++)
+                {
+                    foreach (var data in parsedData[i])
+                    {
+                        if (data.Temperature >= 1 && data.Temperature <= 32 &&
+                            data.Wind <= 11 &&
+                            data.Humidity <= 55 &&
+                            data.Precipitation == 0 &&
+                            data.Lightning == "No" &&
+                            data.Clouds != "Cumulus" && data.Clouds != "Nimbus")
+                        {
+                            filteredCriteria.Add(data, locations[i]);
+                        }
+                    }
+                }
+                //using linq filter among the criteria the best day with smallest wind and humidity
+                keyValuePairForBestDay = filteredCriteria.OrderBy(kv => kv.Key.Wind).ThenBy(kv => kv.Key.Humidity).FirstOrDefault();
+
+                if (keyValuePairForBestDay.Key != null)
+                    bestDayForLaunch = keyValuePairForBestDay.Key;
+                else
+                    Console.WriteLine($"There is no suitable day for launch.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error with analysis of the csv files: {ex}");
+            }
+
+            //add the object and the string with the location to the writing method
+            WriteTheBestDayAndLocationToCsvFile(bestDayForLaunch, keyValuePairForBestDay.Value);
+
+        }
+
+        public static void WriteTheBestDayAndLocationToCsvFile(CsvObject bestDayForLauch, string location)
+        {
+            bool success = false;
+
+            while (!success)
+            {
+                Console.Write("Enter the file path to save the CSV file: ");
+                string? filePath = Console.ReadLine();
+
+                try
+                {
+                    using (var writer = new StreamWriter(filePath))
+                    using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+                    {
+                        // Write comment
+                        writer.WriteLine($"Location: {location}");
+
+                        csv.WriteHeader<CsvObject>();
+                        csv.NextRecord();
+
+                        csv.WriteRecord(bestDayForLauch);
+                    }
+                    Console.WriteLine("CSV file successfully created.");
+                    success = true;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error writing CSV file: {ex.Message}");
+                }
+            }
         }
     }
 }

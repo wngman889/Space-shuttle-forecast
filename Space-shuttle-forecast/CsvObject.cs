@@ -21,6 +21,5 @@ namespace Space_shuttle_forecast
         public string? Lightning { get; set; }
 
         public string? Clouds { get; set; }
-
     }
 }
