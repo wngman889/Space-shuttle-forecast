@@ -1,4 +1,6 @@
 ﻿using CsvHelper;
+using MailKit.Net.Smtp;
+using MimeKit;
 using System.Globalization;
 namespace Space_shuttle_forecast
 {
@@ -74,6 +76,7 @@ namespace Space_shuttle_forecast
                         throw new FileNotFoundException("Folder does not exist.");
                     }
                     //Reading the csv file
+                    SendEmailViaSMTP();
                     ReadCsvFilesFromFileSystem(folderPath);
                 }
                 catch (ArgumentNullException e)
@@ -208,6 +211,35 @@ namespace Space_shuttle_forecast
                 {
                     Console.WriteLine($"Error writing CSV file: {ex.Message}");
                 }
+            }
+        }
+
+        public static void SendEmailViaSMTP()
+        {
+            var email = new MimeMessage();
+
+            email.From.Add(new MailboxAddress("Test sender", "senderp@outlook.com"));
+            email.To.Add(new MailboxAddress("Test receiver", "receiver123456@outlook.com"));
+
+            email.Subject = "Testing out email sending";
+            email.Body = new TextPart(MimeKit.Text.TextFormat.Html)
+            {
+                Text = "<b>This is the best day and location for the space lauch</b>"
+            };
+
+            var builder = new BodyBuilder();
+            builder.Attachments.Add(@"E:\csv-file-with-best-day-to-lauch\file-with-best-day.csv");
+            email.Body = builder.ToMessageBody();
+
+            using (var smtp = new SmtpClient())
+            {
+                smtp.Connect("smtp.outlook.com", 587, false);
+
+                // Note: only needed if the SMTP server requires authentication
+                smtp.Authenticate("senderp@outlook.com", "Sender123");
+
+                smtp.Send(email);
+                smtp.Disconnect(true);
             }
         }
     }
