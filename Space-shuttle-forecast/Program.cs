@@ -8,59 +8,10 @@ namespace Space_shuttle_forecast
     {
         static void Main(string[] args)
         {
-            int choice;
-            string? location = "", folderPath = "";
+            string? folderPath = "";
 
             while (true)
             {
-                Console.WriteLine("Choose a launch location:");
-                Console.WriteLine("1. Kourou, French Guyana");
-                Console.WriteLine("2. Tanegashima, Japan");
-                Console.WriteLine("3. Cape Canaveral, USA");
-                Console.WriteLine("4. Mahia, New Zealand");
-                Console.WriteLine("5. Kodiak, USA");
-                Console.WriteLine("0. Leave");
-
-                Console.Write("Enter location for launch (0-5): ");
-                choice = Convert.ToInt32(Console.ReadLine());
-
-                if (choice == 0)
-                {
-                    Console.WriteLine("Goodbye!");
-                    break;
-                }
-                else if (choice < 1 || choice > 5)
-                {
-                    Console.WriteLine("\nWrite number from the menu.\n");
-                    continue;
-                }
-
-                switch (choice)
-                {
-                    case 1:
-                        location = "Kourou, French Guyana";
-                        break;
-                    case 2:
-                        location = "Tanegashima, Japan";
-                        break;
-                    case 3:
-                        location = "Cape Canaveral, USA";
-                        break;
-                    case 4:
-                        location = "Mahia, New Zealand";
-                        break;
-                    case 5:
-                        location = "Kodiak, USA";
-                        break;
-                    case 0:
-                        break;
-                    default:
-                        location = "";
-                        break;
-                }
-
-                Console.WriteLine($"You chose {location}");
-
                 try
                 {
                     Console.Write("Enter folder path: ");
@@ -76,24 +27,26 @@ namespace Space_shuttle_forecast
                         throw new FileNotFoundException("Folder does not exist.");
                     }
                     //Reading the csv file
-                    SendEmailViaSMTP();
                     ReadCsvFilesFromFileSystem(folderPath);
+
+                    //writing a mail
+                    SendEmailViaSMTP();
+
+                    //if everything is okay it leave the console
+                    break;
                 }
                 catch (ArgumentNullException e)
                 {
-                    Console.WriteLine($"Error: {e.Message}");
+                    Console.WriteLine($"\nError: {e.Message}\n");
                 }
                 catch (FileNotFoundException e)
                 {
-                    Console.WriteLine($"Error: {e.Message}");
+                    Console.WriteLine($"\nError: {e.Message}\n");
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine($"Error: {e.Message}");
+                    Console.WriteLine($"\nError: {e.Message}\n");
                 }
-
-                Console.WriteLine($"Launch location: {location}");
-                Console.WriteLine($"File path: {folderPath}");
             }
 
         }
@@ -135,7 +88,7 @@ namespace Space_shuttle_forecast
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error reading CSV file: {ex.Message}");
+                Console.WriteLine($"\nError reading CSV file: {ex.Message}");
             }
 
             AnalysisOfCsvFilesArray(locations, parsedData);
@@ -164,17 +117,17 @@ namespace Space_shuttle_forecast
                         }
                     }
                 }
-                //using linq filter among the criteria the best day with smallest wind and humidity
+                //using linq filter among the criteria to make the best day with smallest wind and humidity
                 keyValuePairForBestDay = filteredCriteria.OrderBy(kv => kv.Key.Wind).ThenBy(kv => kv.Key.Humidity).FirstOrDefault();
 
                 if (keyValuePairForBestDay.Key != null)
                     bestDayForLaunch = keyValuePairForBestDay.Key;
                 else
-                    Console.WriteLine($"There is no suitable day for launch.");
+                    Console.WriteLine($"\nThere is no suitable day for launch.\n");
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error with analysis of the csv files: {ex}");
+                Console.WriteLine($"\nError with analysis of the csv files: {ex}");
             }
 
             //add the object and the string with the location to the writing method
@@ -188,7 +141,7 @@ namespace Space_shuttle_forecast
 
             while (!success)
             {
-                Console.Write("Enter the file path to save the CSV file: ");
+                Console.Write("\nEnter the file path to save the CSV file: ");
                 string? filePath = Console.ReadLine();
 
                 try
@@ -204,43 +157,100 @@ namespace Space_shuttle_forecast
 
                         csv.WriteRecord(bestDayForLauch);
                     }
-                    Console.WriteLine("CSV file successfully created.");
+                    Console.WriteLine("\nCSV file successfully created.\n");
                     success = true;
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"Error writing CSV file: {ex.Message}");
+                    Console.WriteLine($"\nError writing CSV file: {ex.Message}");
                 }
             }
         }
 
         public static void SendEmailViaSMTP()
         {
-            var email = new MimeMessage();
+            string? senderMail, senderMailPassword, subjectOfMail, receiverMail, filePathWithWeatherForecast;
+            bool success = false;
 
-            email.From.Add(new MailboxAddress("Test sender", "senderp@outlook.com"));
-            email.To.Add(new MailboxAddress("Test receiver", "receiver123456@outlook.com"));
-
-            email.Subject = "Testing out email sending";
-            email.Body = new TextPart(MimeKit.Text.TextFormat.Html)
+            while (!success)
             {
-                Text = "<b>This is the best day and location for the space lauch</b>"
-            };
+                try
+                {
+                    Console.Write("\nFrom which mail you send: ");
+                    //senderp@outlook.com
+                    senderMail = Console.ReadLine();
 
-            var builder = new BodyBuilder();
-            builder.Attachments.Add(@"E:\csv-file-with-best-day-to-lauch\file-with-best-day.csv");
-            email.Body = builder.ToMessageBody();
+                    Console.Write("\nPassword: ");
+                    //Sender123
+                    //GetPassword method is for hiding the password with '*'
+                    senderMailPassword = GetPassword();
 
-            using (var smtp = new SmtpClient())
-            {
-                smtp.Connect("smtp.outlook.com", 587, false);
+                    Console.Write("\nWrite subject of the mail: ");
+                    subjectOfMail = Console.ReadLine();
 
-                // Note: only needed if the SMTP server requires authentication
-                smtp.Authenticate("senderp@outlook.com", "Sender123");
+                    Console.Write("\nWrite which mail should receive it: ");
+                    //receiver123456@outlook.com
+                    receiverMail = Console.ReadLine();
 
-                smtp.Send(email);
-                smtp.Disconnect(true);
+                    Console.Write("\nWrite file location of the csv file: ");
+                    //E:\csv-file-with-best-day-to-lauch\LauchAnalysisReport.csv
+                    filePathWithWeatherForecast = Console.ReadLine();
+
+                    var email = new MimeMessage();
+
+                    email.From.Add(new MailboxAddress(subjectOfMail, senderMail));
+                    email.To.Add(new MailboxAddress("Receiver", receiverMail));
+
+                    email.Subject = subjectOfMail;
+
+                    var builder = new BodyBuilder();
+                    builder.Attachments.Add(filePathWithWeatherForecast);
+                    email.Body = builder.ToMessageBody();
+
+                    using (var smtp = new SmtpClient())
+                    {
+                        smtp.Connect("smtp.outlook.com", 587, false);
+
+                        //authentication via smtp
+                        smtp.Authenticate(senderMail, senderMailPassword);
+
+                        smtp.Send(email);
+                        smtp.Disconnect(true);
+                    }
+
+                    success = true;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error: {ex.Message}");
+                }
             }
+        }
+
+        public static string GetPassword()
+        {
+            string password = "";
+            ConsoleKeyInfo key;
+
+            do
+            {
+                key = Console.ReadKey(true);
+
+                // Ignore any key if it's not a valid character or enter key
+                if (key.Key != ConsoleKey.Backspace && key.Key != ConsoleKey.Enter)
+                {
+                    password += key.KeyChar;
+                    Console.Write("*"); // Display asterisk (*) instead of the actual character
+                }
+                else if (key.Key == ConsoleKey.Backspace && password.Length > 0)
+                {
+                    password = password.Remove(password.Length - 1);
+                    Console.Write("\b \b"); // Move cursor back, overwrite character with space, move cursor back again
+                }
+            }
+            while (key.Key != ConsoleKey.Enter);
+
+            return password;
         }
     }
 }
